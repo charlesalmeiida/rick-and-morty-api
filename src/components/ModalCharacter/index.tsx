@@ -1,4 +1,9 @@
-import { ButtonClose, InfoCharacter, ModalContainer } from "./Modal.styles"
+import {
+  Backdrop,
+  ButtonClose,
+  InfoCharacter,
+  ModalContainer,
+} from "./Modal.styles"
 
 interface ModalCharacterProps {
   name: string
@@ -20,18 +25,20 @@ export function ModalCharacter({
   handleModal,
 }: ModalCharacterProps) {
   return (
-    <ModalContainer onClick={handleModal}>
-      <ButtonClose>X</ButtonClose>
-      <img src={image} alt="" />
-      <InfoCharacter>
-        <h2>{name}</h2>
-        <ul>
-          <li>Gender: {gender}</li>
-          <li>Status: {status}</li>
-          <li>Species: {species}</li>
-          <li>Origin: {origin}</li>
-        </ul>
-      </InfoCharacter>
-    </ModalContainer>
+    <Backdrop>
+      <ModalContainer onClick={handleModal}>
+        <ButtonClose>X</ButtonClose>
+        <img src={image} alt="" />
+        <InfoCharacter>
+          <h2>{name}</h2>
+          <ul>
+            <li>Gender: {gender}</li>
+            <li>Status: {status}</li>
+            <li>Species: {species}</li>
+            <li>Origin: {origin}</li>
+          </ul>
+        </InfoCharacter>
+      </ModalContainer>
+    </Backdrop>
   )
 }

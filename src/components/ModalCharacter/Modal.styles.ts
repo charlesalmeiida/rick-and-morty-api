@@ -43,3 +43,17 @@ export const ButtonClose = styled.div`
   top: 0;
   cursor: pointer;
 `
+
+export const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Fundo escuro translúcido */
+  backdrop-filter: blur(8px); /* Efeito de desfoque */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+`
