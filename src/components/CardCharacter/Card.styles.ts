@@ -5,6 +5,7 @@ export const ContainerCard = styled.div`
   background-color: #151020;
   border-radius: 0.4rem;
   padding: 2rem;
+  cursor: pointer;
   .image {
     width: 100%;
     height: 24.3rem;

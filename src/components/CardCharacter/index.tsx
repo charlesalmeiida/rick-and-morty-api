@@ -1,10 +1,16 @@
-import { ContainerCard } from "./styles"
+import { ContainerCard } from "./Card.styles"
+import { Characters } from "../Application"
 
 interface CardCharacterProps {
   name: string
   gender: string
   species: string
   image: string
+  origin: {
+    name: string
+  }
+  status: string
+  handleModal: (character: Characters) => void
 }
 
 export function CardCharacter({
@@ -12,9 +18,16 @@ export function CardCharacter({
   gender,
   species,
   image,
+  handleModal,
+  origin,
+  status,
 }: CardCharacterProps) {
   return (
-    <ContainerCard>
+    <ContainerCard
+      onClick={() =>
+        handleModal({ name, gender, species, image, origin, status })
+      }
+    >
       <div className="image">
         <img src={image} alt="" />
       </div>

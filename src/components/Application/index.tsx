@@ -1,14 +1,18 @@
 import { CardCharacter } from "../CardCharacter"
-import { ContainerApp, ContentCharacters, HeaderApp, Loader } from "./styles"
+import { ContainerApp, ContentCharacters, HeaderApp, Loader } from "./App.styles"
 import { api } from "../../services/api"
 import { useEffect, useState } from "react"
+import { ModalCharacter } from "../ModalCharacter"
 
-interface Characters {
-  id: number
+export interface Characters {
   name: string
   gender: string
   species: string
   image: string
+  origin: {
+    name: string
+  }
+  status: string
 }
 
 interface Info {
@@ -20,6 +24,8 @@ export function Application() {
   const [info, setInfo] = useState<Info>()
   const [page, setPage] = useState(1)
   const [isLoader, setLoader] = useState(true)
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [selectedCharater, setSelectedCharacter] = useState<Characters | null>()
 
   useEffect(() => {
     api.get(`?page=${page}`).then((response) => {
@@ -31,6 +37,15 @@ export function Application() {
   }, [page])
 
   const handleClick = () => setPage(page + 1)
+
+  const openModal = (character: Characters) => {
+    setSelectedCharacter(character)
+    setModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalOpen(false)
+  }
 
   return (
     <>
@@ -47,9 +62,15 @@ export function Application() {
         <ContentCharacters>
           <div>
             {characters?.map(
-              ({ id, name, gender, species, image }: Characters) => (
+              (
+                { name, status, gender, species, image, origin }: Characters,
+                index
+              ) => (
                 <CardCharacter
-                  key={id}
+                  origin={origin}
+                  status={status}
+                  handleModal={openModal}
+                  key={index}
                   name={name}
                   gender={gender}
                   species={species}
@@ -58,6 +79,17 @@ export function Application() {
               )
             )}
           </div>
+          {isModalOpen && selectedCharater && (
+            <ModalCharacter
+              handleModal={closeModal}
+              gender={selectedCharater.gender}
+              image={selectedCharater.image}
+              name={selectedCharater.name}
+              origin={selectedCharater.origin.name}
+              species={selectedCharater.species}
+              status={selectedCharater.status}
+            />
+          )}
           {page < 42 && <button onClick={handleClick}>Carregar mais</button>}
         </ContentCharacters>
       </ContainerApp>
